@@ -296,14 +296,15 @@ def go(proxy):
 def startthreads(threadnum):
     
     threads = []
-    #Optional proxies
-    #file = open("proxies.txt","r")
-    #proxies = file.readlines()
-    #file.close()
+    # Read proxies from file
+    with open("proxies.txt","r") as file:
+        proxies = file.readlines()
     
     #Starts threads
     for i in range(threadnum):
-        Thread = threading.Thread(target=go, args=("proxyhere",))    
+        # Choose a random proxy from the list
+        proxy = random.choice(proxies).strip()
+        Thread = threading.Thread(target=go, args=(proxy,))    
         threads.append(Thread)
     for thread in threads:
         thread.start()
